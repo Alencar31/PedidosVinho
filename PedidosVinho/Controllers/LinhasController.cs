@@ -53,7 +53,7 @@ namespace PedidosVinho.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Codigo,Nome")] Linha linha)
+        public async Task<IActionResult> Create([Bind("Id,Nome")] Linha linha)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace PedidosVinho.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Codigo,Nome")] Linha linha)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Linha linha)
         {
             if (id != linha.Id)
             {

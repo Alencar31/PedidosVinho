@@ -36,8 +36,7 @@ namespace PedidosVinho
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<PedidosVinhoContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("PedidosVinhoContext")));
+            services.AddDbContext<PedidosVinhoContext>(options => options.UseMySql(Configuration.GetConnectionString("PedidosVinhoContext"), builder => builder.MigrationsAssembly("PedidosVinho")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
