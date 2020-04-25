@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PedidosVinho.Models;
 
 namespace PedidosVinho.Models
 {
@@ -13,6 +14,8 @@ namespace PedidosVinho.Models
         {
         }
 
-        public DbSet<PedidosVinho.Models.Linha> Linha { get; set; }
+        public DbSet<Linha> Linha { get; set; }
+
+        public DbSet<Produto> Produto { get; set; }
     }
 }

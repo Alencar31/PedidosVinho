@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200421175647_Initial.cs" />
+    <Compile Remove="Migrations\20200421175647_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200422015944_OtherEntities.cs" />
+    <Compile Remove="Migrations\20200422015944_OtherEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200425005909_Update.cs" />
+    <Compile Remove="Migrations\20200425005909_Update.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
