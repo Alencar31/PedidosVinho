@@ -8,6 +8,8 @@ namespace PedidosVinho.Models
         public string Nome { get; set; }
         public decimal Preco { get; set; }
         public Linha Linha { get; set; }
+        public int LinhaId { get; set; }
+
 
         public Produto()
         {

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using PedidosVinho.Models;
 using PedidosVinho.Data;
+using PedidosVinho.Services;
 
 namespace PedidosVinho
 {
@@ -40,6 +41,7 @@ namespace PedidosVinho
             services.AddDbContext<PedidosVinhoContext>(options => options.UseMySql(Configuration.GetConnectionString("PedidosVinhoContext"), builder => builder.MigrationsAssembly("PedidosVinho")));
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<LinhaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,16 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PedidosVinho.Models;
+using PedidosVinho.Models.ViewModels;
+using PedidosVinho.Services;
 
 namespace PedidosVinho.Controllers
 {
     public class ProdutosController : Controller
     {
         private readonly PedidosVinhoContext _context;
+        private readonly LinhaService _linhaservice;
 
-        public ProdutosController(PedidosVinhoContext context)
+        public ProdutosController(PedidosVinhoContext context,LinhaService linhaService)
         {
             _context = context;
+            _linhaservice = linhaService;
         }
 
         // GET: Produtos
@@ -45,7 +49,9 @@ namespace PedidosVinho.Controllers
         // GET: Produtos/Create
         public IActionResult Create()
         {
-            return View();
+            var linhas = _linhaservice.FindAll();
+            var viewModel = new ProdutoFormViewModel { Linhas = linhas };
+            return View(viewModel);
         }
 
         // POST: Produtos/Create
