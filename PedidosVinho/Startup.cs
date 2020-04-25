@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using PedidosVinho.Models;
+using PedidosVinho.Data;
 
 namespace PedidosVinho
 {
@@ -37,14 +38,17 @@ namespace PedidosVinho
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<PedidosVinhoContext>(options => options.UseMySql(Configuration.GetConnectionString("PedidosVinhoContext"), builder => builder.MigrationsAssembly("PedidosVinho")));
+
+            services.AddScoped<SeedingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else
             {
