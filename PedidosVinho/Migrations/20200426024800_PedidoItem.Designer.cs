@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PedidosVinho.Models;
 
 namespace PedidosVinho.Migrations
 {
     [DbContext(typeof(PedidosVinhoContext))]
-    partial class PedidosVinhoContextModelSnapshot : ModelSnapshot
+    [Migration("20200426024800_PedidoItem")]
+    partial class PedidoItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

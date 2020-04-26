@@ -18,6 +18,7 @@
     <Compile Remove="Migrations\20200422015944_OtherEntities.Designer.cs" />
     <Compile Remove="Migrations\20200425005909_Update.cs" />
     <Compile Remove="Migrations\20200425005909_Update.Designer.cs" />
+    <Compile Remove="Models\PedidoItem].cs" />
   </ItemGroup>
 
   <ItemGroup>

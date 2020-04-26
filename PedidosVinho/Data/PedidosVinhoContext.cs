@@ -17,5 +17,9 @@ namespace PedidosVinho.Models
         public DbSet<Linha> Linha { get; set; }
 
         public DbSet<Produto> Produto { get; set; }
+
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<PedidoItem> PedidoItem { get; set; }
     }
 }
