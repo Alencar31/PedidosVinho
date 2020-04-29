@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PedidosVinho.Models;
 using PedidosVinho.Services;
 
@@ -16,11 +17,9 @@ namespace PedidosVinho.Services
             _context = context;
         }
 
-        public List<Linha> FindAll()
+        public async Task<List<Linha>> FindAllAsync()
         {
-            return _context.Linha.OrderBy(x => x.Nome).ToList();
+            return await _context.Linha.OrderBy(x => x.Nome).ToListAsync();
         }
-
-
     }
 }

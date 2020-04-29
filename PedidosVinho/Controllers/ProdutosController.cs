@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PedidosVinho.Models;
 using PedidosVinho.Models.ViewModels;
 using PedidosVinho.Services;
+using PedidosVinho.Services.Exceções;
 
 namespace PedidosVinho.Controllers
 {
@@ -15,17 +16,21 @@ namespace PedidosVinho.Controllers
     {
         private readonly PedidosVinhoContext _context;
         private readonly LinhaService _linhaservice;
+        private readonly ProdutoService _produtoservice;
 
-        public ProdutosController(PedidosVinhoContext context,LinhaService linhaService)
+        public ProdutosController(PedidosVinhoContext context,LinhaService linhaService,ProdutoService produtoService)
         {
             _context = context;
             _linhaservice = linhaService;
+            _produtoservice = produtoService;
         }
 
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Produto.ToListAsync());
+            var list = _produtoservice.FindAllAsync();
+            return View(await list);
+            //return View(await _context.Produto.ToListAsync());
         }
 
         // GET: Produtos/Details/5
@@ -35,21 +40,18 @@ namespace PedidosVinho.Controllers
             {
                 return NotFound();
             }
-
-            var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (produto == null)
+            var obj = await _produtoservice.FindByIdAsync(id.Value);
+            if (obj == null)
             {
                 return NotFound();
             }
-
-            return View(produto);
+            return View(obj);
         }
 
         // GET: Produtos/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var linhas = _linhaservice.FindAll();
+            var linhas = await _linhaservice.FindAllAsync();
             var viewModel = new ProdutoFormViewModel { Linhas = linhas };
             return View(viewModel);
         }
@@ -59,15 +61,16 @@ namespace PedidosVinho.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LinhaId,Codigo,Nome,Preco")] Produto produto)
+        public async Task<IActionResult> Create(Produto produto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(produto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var linhas = await _linhaservice.FindAllAsync();
+                var viewModel = new ProdutoFormViewModel { Produto = produto, Linhas = linhas };
+                return View(viewModel);
             }
-            return View(produto);
+            await _produtoservice.insertAsync(produto);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Produtos/Edit/5
@@ -78,12 +81,12 @@ namespace PedidosVinho.Controllers
                 return NotFound();
             }
 
-            var produto = await _context.Produto.FindAsync(id);
+            var produto = await _produtoservice.FindByIdAsync(id.Value);
             if (produto == null)
             {
                 return NotFound();
             }
-            List<Linha> linhas = _linhaservice.FindAll();
+            List<Linha> linhas = await _linhaservice.FindAllAsync();
             ProdutoFormViewModel viewModel = new ProdutoFormViewModel { Produto = produto, Linhas = linhas };
             return View(viewModel);
         }
@@ -130,14 +133,12 @@ namespace PedidosVinho.Controllers
             {
                 return NotFound();
             }
-            var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (produto == null)
+            var obj = await _produtoservice.FindByIdAsync(id.Value);
+            if (obj == null)
             {
                 return NotFound();
             }
-
-            return View(produto);
+            return View(obj);
         }
 
         // POST: Produtos/Delete/5
@@ -155,5 +156,6 @@ namespace PedidosVinho.Controllers
         {
             return _context.Produto.Any(e => e.Id == id);
         }
+
     }
 }
